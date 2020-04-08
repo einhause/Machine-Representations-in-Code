@@ -1,0 +1,99 @@
+<!--From here till the <script> tag is HTML and CSS code (for the functability and styling of the page).-->
+<html>
+    <head>
+        <title>Regular Expression Example 1</title>
+    </head>
+    <style type="text/css">
+        body {
+            background-color: lightcoral;
+        }
+        #container {
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
+        #descriptionbox {
+            border: 5px ridge red;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: orange;
+        }
+        h1 {
+            text-align: center;
+            font-family: monospace; 
+        }
+        #re {
+            text-align: center;
+            font-family: monospace;
+            border: 2px dashed red;
+            margin: 0 auto 10px auto;
+            padding: 10px;
+            background-color: bisque;
+        }
+        #userInput {
+            margin-bottom: 10px;
+        }
+        #result {
+            color: blue;
+        }
+    </style>
+    <body>
+        <div id="container">
+            <div id="descriptionbox">
+                <h1>Please enter a string containing an odd number of 0's or exactly two 1's. Alphabet is {0,1}</h1>
+                <h2 id="re">(1*(1*01*01*)*01*)+(0*10*10*)</h2>
+            </div>
+            <center>
+            <input type="text" id="userInput" size="50" placeholder="Type String Here"><br>
+            <button id="button">Check if Acceptable</button>
+            </center>
+            <div id="acceptablebox">
+                <h1 id="result">Please type input above</h1>
+            </div>
+        </div>
+    </body>
+        
+        <!--The start of the JavaScript. The functions dealing with the Regular Expression are in the following JavaScript code-->
+    
+        <script type="text/javascript">
+            
+        //Our event listener for the button. Makes sure that the function to check the string 
+        //for our regular expression is called when we click the button
+        document.getElementById("button").addEventListener("click", checkAcceptable);
+            
+        //Our main function
+        function checkAcceptable() {
+            
+            //The regular expression in JavaScript syntax:
+            /**
+                Regular Expressions in JavaScript are indicated by using double forward shashes like this: /theRegularExpression/
+                Parenthesis' are used for grouping together what to check for
+                ^ : Indicates to check for the following at the start of the string
+                $ : Indicates to check for whats before it at the end of the string
+                ^ and $ together ensure to check for the portion in parenthesis for the entire string
+                The '+' (or) operator used in our textbook is equivalent to '|' in JavaScript RegEx syntax
+                Star ('*') and concatenation are the same syntax for the textbook and in JavaScript
+            **/
+            const regularExpression = /^(1*01*(1*01*01*)*)$|^(0*10*10*)$/;
+            
+            //Gets the value of what was in the textbox on the page (what was typed by the user)
+            const str = document.getElementById('userInput').value;
+            //the test() function returns true if the string is in the language described by our regular expression, false otherwise
+            const acceptable = regularExpression.test(str);
+            //Logs the string and its boolean value once the test() function is called on it.
+            console.log(str, acceptable)
+            
+            //If acceptable, output the green 'Acceptable!' text on the page
+            if (acceptable) { 
+                document.getElementById('result').style.color = 'green';
+                document.getElementById('result').innerHTML = 'Acceptable!';
+                
+            //else, output the red 'Rejectable' text on the page
+            } else {
+                document.getElementById('result').style.color = 'red';
+                document.getElementById('result').innerHTML = 'Rejectable';
+            }
+        }
+    </script>
+</html>
